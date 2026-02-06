@@ -1,0 +1,32 @@
+name: Discord Custom Notification
+
+on:
+  pull_request:
+    types: [opened, merged] # PR作成時とマージ時
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Message
+        run: |
+          # 作成時とマージ時でメッセージを切り分け
+          if [[ "${{ github.event.action }}" == "opened" ]]; then
+            TITLE="🚀 PRが作成されたよ！"
+            BODY="${{ github.actor }} がPRを作成したよ！レビューしよう！\nタイトル: ${{ github.event.pull_request.title }}"
+          elif [[ "${{ github.event.pull_request.merged }}" == "true" ]]; then
+            TITLE="✅ マージ完了！"
+            BODY="${{ github.actor }} のPRがマージされたよ！お疲れ様！"
+          fi
+
+          # Discordへ送信
+          curl -X POST -H "Content-Type: application/json" \
+            -d "{
+              \"embeds\": [{
+                \"title\": \"$TITLE\",
+                \"description\": \"$BODY\",
+                \"url\": \"${{ github.event.pull_request.html_url }}\",
+                \"color\": 5814783
+              }]
+            }" \
+            ${{ secrets.DISCORD_WEBHOOK_URL }}
