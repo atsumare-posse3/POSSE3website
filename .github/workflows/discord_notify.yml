@@ -2,7 +2,7 @@ name: Discord Custom Notification
 
 on:
   pull_request:
-    types: [opened, merged] # PR作成時とマージ時
+    types: [opened, closed] # PR作成時とマージ時
 
 jobs:
   notify:
