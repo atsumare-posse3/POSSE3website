@@ -3,7 +3,6 @@ name: Discord Custom Notification
 on:
   pull_request:
     types: [opened, closed]
-
 jobs:
   notify:
     runs-on: ubuntu-latest
