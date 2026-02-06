@@ -3,7 +3,6 @@ name: Discord Custom Notification
 on:
   pull_request:
     types: [opened, closed] # PR作成時とマージ時
-
 jobs:
   notify:
     runs-on: ubuntu-latest
