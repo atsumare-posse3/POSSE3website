@@ -19,4 +19,4 @@ RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
 WORKDIR /var/www/html
 
 # 5. 権限の設定（Windows/Mac混在環境でのトラブル防止）
-RUN chmod -R 777 /var/www/html
+RUN chown -R www-data:www-data /var/www/html && chmod -R 755 /var/www/html
