@@ -1,7 +1,7 @@
 <?php
 /**
  * シンプルなルーター
- * 
+ *
  * ルート:
  * - /self/{期}/{名前} : 自己紹介ページ
  */
@@ -23,10 +23,10 @@ if (preg_match('#^/self/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$#', $requestUri, $matc
     // /self/{期}/{名前} - 自己紹介ページ
     $generation = $matches[1];
     $name = $matches[2];
-    
+
     // 自己紹介ページを表示
     include __DIR__ . '/self/header.php';
-    
+
     // 各メンバーの自己紹介ファイルがあれば読み込む
     $memberFile = __DIR__ . '/self/' . $generation . '/' . $name . '.php';
     if (file_exists($memberFile)) {
@@ -37,7 +37,7 @@ if (preg_match('#^/self/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$#', $requestUri, $matc
         echo '<p>メンバー「' . htmlspecialchars($generation, ENT_QUOTES, 'UTF-8') . '/' . htmlspecialchars($name, ENT_QUOTES, 'UTF-8') . '」は見つかりませんでした。</p>';
         echo '</div>';
     }
-    
+
     include __DIR__ . '/self/footer.php';
-    
+
 }
