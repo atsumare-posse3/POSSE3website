@@ -3,14 +3,14 @@ FROM php:8.2-fpm
 
 # 2. 必要なライブラリやツールをインストール
 # ここでは、PHPでよく使う拡張機能（pdo_mysqlなど）を追加してます
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
     git \
     curl \
     libpng-dev \
     libonig-dev \
     libxml2-dev \
     zip \
-    unzip
+    unzip && rm -rf /var/lib/apt/lists/*
 
 # 3. PHPの拡張機能をインストール（将来DBを使うときのためにpdo_mysqlを入れておく）
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd
