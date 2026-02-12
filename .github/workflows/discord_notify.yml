@@ -16,6 +16,7 @@ jobs:
           if [[ "${{ github.event.action }}" == "opened" ]]; then
             TITLE="PRが作成されたよ！"
             BODY="${{ github.actor }} がPRを作成したよ！レビューしよう！タイトル : ${{ github.event.pull_request.title }}"
+
           elif [[ "${{ github.event.pull_request.merged }}" == "true" ]]; then
             TITLE="マージ完了！"
             BODY="${{ github.actor }} のPRがマージされたよ！お疲れ様！"
