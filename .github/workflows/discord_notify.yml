@@ -1,0 +1,40 @@
+name: Discord Custom Notification
+
+on:
+  pull_request:
+    types: [opened, closed]
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Send Message
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          set -euo pipefail
+
+          if [[ "${{ github.event.action }}" == "opened" ]]; then
+            TITLE="PRが作成されたよ！"
+            BODY="${{ github.actor }} がPRを作成したよ！レビューしよう！タイトル: ${{ github.event.pull_request.title }}"
+          elif [[ "${{ github.event.pull_request.merged }}" == "true" ]]; then
+            TITLE="マージ完了！"
+            BODY="${{ github.actor }} のPRがマージされたよ！お疲れ様！"
+          else
+            echo "Not a target event. action=${{ github.event.action }}, merged=${{ github.event.pull_request.merged }}"
+            exit 0
+          fi
+
+          payload=$(jq -n \
+            --arg title "$TITLE" \
+            --arg description "$BODY" \
+            --arg url "${{ github.event.pull_request.html_url }}" \
+            '{
+              embeds: [{
+                title: $title,
+                description: $description,
+                url: $url,
+                color: 5814783
+              }]
+            }')
+
+          curl -fsSL -X POST -H "Content-Type: application/json" -d "$payload" "$DISCORD_WEBHOOK_URL"
