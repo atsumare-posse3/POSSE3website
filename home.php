@@ -4,70 +4,15 @@ require_once __DIR__ . "/self/header.php";
 require_once __DIR__ . "/member_data.php";
 ?>
 
-<style>
-    .page-title {
-        text-align: center;
-        margin-bottom: 40px;
-        color: var(--text-dark);
-        font-size: 2rem;
-    }
-    .member-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-        gap: 24px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    .member-card {
-        background: #fff;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-        text-decoration: none;
-        color: inherit;
-        display: block;
-    }
-    .member-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 8px 24px rgba(26, 115, 232, 0.2);
-    }
-    .member-img {
-        width: 100%;
-        height: 280px;
-        object-fit: cover;
-        background-color: #e3f2fd;
-    }
-    .member-info {
-        padding: 20px;
-        text-align: center;
-    }
-    .member-name {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: var(--text-dark);
-        margin-bottom: 8px;
-    }
-    .member-generation {
-        font-size: 0.9rem;
-        color: #1a73e8;
-        background: #e3f2fd;
-        display: inline-block;
-        padding: 4px 12px;
-        border-radius: 20px;
-        font-weight: 500;
-    }
-</style>
+<h1 class="text-3xl font-bold text-center text-slate-800 mb-10">メンバー紹介</h1>
 
-<h1 class="page-title">メンバー紹介</h1>
-
-<div class="member-container">
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 max-w-6xl mx-auto">
     <?php foreach ($member as $id => $data): ?>
-        <a href="<?php echo htmlspecialchars($data['link']); ?>" class="member-card">
-            <img src="./img/<?php echo htmlspecialchars($data['img']); ?>" alt="<?php echo htmlspecialchars($data['name']); ?>" class="member-img">
-            <div class="member-info">
-                <p class="member-name"><?php echo htmlspecialchars($data['name']); ?></p>
-                <span class="member-generation"><?php echo htmlspecialchars($data['generation']); ?>期生</span>
+        <a href="<?php echo htmlspecialchars($data['link']); ?>" class="block bg-white rounded-xl overflow-hidden shadow-md hover:shadow-xl hover:shadow-blue-500/20 hover:-translate-y-1 transition-all duration-300 no-underline">
+            <img src="./img/<?php echo htmlspecialchars($data['img']); ?>" alt="<?php echo htmlspecialchars($data['name']); ?>" class="w-full h-72 object-cover bg-blue-50">
+            <div class="p-5 text-center">
+                <p class="text-xl font-bold text-slate-800 mb-2"><?php echo htmlspecialchars($data['name']); ?></p>
+                <span class="text-sm text-primary bg-primary-light px-3 py-1 rounded-full font-medium"><?php echo htmlspecialchars($data['generation']); ?>期生</span>
             </div>
         </a>
     <?php endforeach; ?>
