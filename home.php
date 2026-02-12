@@ -79,8 +79,8 @@ require_once __DIR__ . "/member_data.php";
     
     <div class="member-container">
         <?php foreach ($member as $id => $data): ?>
-            <a href="<?php echo "./img/".htmlspecialchars($data['link']); ?>" class="member-card">
-                <img src="images/<?php echo htmlspecialchars($data['img']); ?>" alt="<?php echo htmlspecialchars($data['name']); ?>" class="member-img">
+            <a href="<?php echo htmlspecialchars($data['link']); ?>" class="member-card">
+                <img src="./img/<?php echo htmlspecialchars($data['img']); ?>" alt="<?php echo htmlspecialchars($data['name']); ?>" class="member-img">
                 <div class="member-info">
                     <p class="member-name"><?php echo htmlspecialchars($data['name']); ?></p>
                     <span class="member-generation"><?php echo htmlspecialchars($data['generation']); ?>期生</span>
