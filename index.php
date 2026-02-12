@@ -19,7 +19,11 @@ if ($basePath !== '/' && $basePath !== '\\') {
 $requestUri = '/' . ltrim($requestUri, '/');
 
 // ルーティング
-if (preg_match('#^/self/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$#', $requestUri, $matches)) {
+if($requestUri === '/' || $requestUri === '/index.php') {
+    // ルートページ
+    include __DIR__ . '/home.php';
+    
+} else if(preg_match('#^/self/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$#', $requestUri, $matches)) {
     // /self/{期}/{名前} - 自己紹介ページ
     $generation = $matches[1];
     $name = $matches[2];
@@ -40,4 +44,7 @@ if (preg_match('#^/self/([a-zA-Z0-9_-]+)/([a-zA-Z0-9_-]+)$#', $requestUri, $matc
     
     include __DIR__ . '/self/footer.php';
     
+} else {
+    // 404エラーページ
+    include __DIR__ . '/404.php';
 }
