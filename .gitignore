@@ -1,0 +1,15 @@
+# Docker / 環境変数
+.env
+
+# Node.js
+node_modules/
+dist/
+npm-debug.log*
+
+# OS固有のゴミファイル
+.DS_Store
+Thumbs.db
+
+# IDE (VS Codeなど) の設定
+.vscode/
+.kiro/

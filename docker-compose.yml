@@ -1,0 +1,46 @@
+services:
+  # ① Webサーバー (Nginx)
+  web:
+    image: nginx:1.27.0
+    ports:
+      - "${APP_PORT}:80"
+    volumes:
+      - .:/var/www/html
+      - ./docker/nginx/default.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - app
+
+  # ② PHP実行環境 (App)
+  app:
+    build: ./docker/php
+    volumes:
+      - .:/var/www/html
+
+  # ③ フロントエンドビルド (Node/Vite)
+  node:
+    image: node:20-slim
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    ports:
+      - "${VITE_PORT}:5173"
+    tty: true
+    command: sh -c "npm install && npm run dev"
+
+  # --- DBは今は使わないのでとりあえずコメントアウトしてあります ---
+  # db:
+  #   image: mysql:8.0
+  #   platform: linux/amd64
+  #   environment:
+  #     MYSQL_ROOT_PASSWORD: password
+  #     MYSQL_DATABASE: posse_db
+  #   ports:
+  #     - "3306:3306"
+
+  # phpmyadmin:
+  #   image: phpmyadmin/phpmyadmin
+  #   ports:
+  #     - "8888:80"
+  #   environment:
+  #     - PMA_ARBITRARY=1
+  #     - PMA_HOST=db
